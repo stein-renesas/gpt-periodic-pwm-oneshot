@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README-gpt</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+  <style type="text/css">:root {
+--brand: #2b0a8c;
+--accent: #e6007e;
+--ink: #1f2430;
+--muted: #667085;
+--line: #e4e7ec;
+--surface: #f7f7fb;
+}
+* {
+box-sizing: border-box;
+}
+html {
+scroll-behavior: smooth;
+}
+body {
+margin: 0 auto;
+max-width: 1120px;
+padding: 50px;
+color: var(--ink);
+background: #ffffff;
+font-family: "Segoe UI", Arial, sans-serif;
+line-height: 1.65;
+}
+a {
+color: var(--brand);
+}
+a:hover {
+color: var(--accent);
+}
+h1 {
+margin-top: 2.7rem;
+padding-bottom: 0.35rem;
+border-bottom: 2px solid var(--line);
+}
+h2 {
+margin-top: 2.4rem;
+padding-bottom: 0.3rem;
+border-bottom: 1px solid var(--line);
+}
+h3,
+h4,
+h5,
+h6 {
+margin-top: 2rem;
+}
+img {
+display: block;
+max-width: 100%;
+height: auto;
+margin: 1rem auto 0.35rem;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+margin: 1.25rem 0;
+}
+th,
+td {
+border: 1px solid var(--line);
+padding: 0.7rem;
+vertical-align: top;
+}
+th {
+background: var(--surface);
+text-align: left;
+}
+blockquote {
+margin: 1.2rem 0;
+padding: 0.7rem 1rem;
+border-left: 4px solid var(--brand);
+background: var(--surface);
+}
+code {
+font-family: Consolas, "Courier New", monospace;
+}
+pre {
+overflow-x: auto;
+padding: 1rem;
+border-radius: 8px;
+background: var(--surface);
+}
+
+body > h1:first-of-type {
+margin: -50px calc(50% - 50vw) 3rem;
+padding: 3.5rem max(50px, calc((100vw - 1120px) / 2));
+border: 0;
+background: linear-gradient(135deg, #250777, #3e16a3);
+color: #ffffff;
+font-size: clamp(2rem, 5vw, 3.5rem);
+line-height: 1.1;
+}
+@media (max-width: 640px) {
+body {
+padding: 20px;
+}
+body > h1:first-of-type {
+margin-top: -20px;
+padding: 2.5rem 20px;
+}
+}
+</style>
+</head>
+<body>
+<h1 id="gpt-software-building-block">GPT Software Building Block</h1>
+<h2 id="overview">Overview</h2>
+<p>This Software Building Block (SBB) demonstrates typical use of the
+Renesas General PWM Timer (GPT) HAL APIs in three operating modes:</p>
+<ul>
+<li><strong>Periodic</strong>: change the period used to drive the user
+LED.</li>
+<li><strong>PWM</strong>: change the PWM duty cycle used to adjust the
+user LED intensity.</li>
+<li><strong>One-Shot</strong>: start a one-shot timer and report its
+expiration on the serial terminal.</li>
+</ul>
+<p>This document covers only:</p>
+<ul>
+<li>FPB-RA2E3</li>
+<li>FPB-RA4E2</li>
+<li>FPB-RA6E2</li>
+<li>FPB-RA8E1</li>
+</ul>
+<p>The reference application provides a serial-terminal menu that lets
+the user select one of these three modes.</p>
+<h2 id="what-use-case-does-this-sbb-demonstrate">What use case does this
+SBB demonstrate?</h2>
+<p>The SBB demonstrates how an application can reuse a small GPT wrapper
+to configure and exercise Periodic, PWM, and One-Shot timer
+behavior.</p>
+<h3 id="periodic-mode">Periodic mode</h3>
+<p>The application accepts a period in milliseconds, derives the GPT
+source frequency, applies the configured source divider, converts the
+requested period into timer counts, validates the count against the
+supported timer width, opens and starts the Periodic GPT instance, and
+updates its period.</p>
+<p>The reference application describes the visible result as a change in
+the frequency of the user LED.</p>
+<h3 id="pwm-mode">PWM mode</h3>
+<p>The application accepts a duty cycle from <strong>0 to 100
+percent</strong>, opens and starts the PWM GPT instance, obtains the
+configured timer period, converts the requested percentage into
+duty-cycle counts, and applies the duty cycle to the configured GPT
+output pin.</p>
+<p>The reference application describes the visible result as a change in
+the intensity of the user LED.</p>
+<h3 id="one-shot-mode">One-Shot mode</h3>
+<p>The application opens and starts the One-Shot GPT instance and waits
+for the timer callback to report <code>TIMER_EVENT_CYCLE_END</code>.
+When the event is received, the application reports that the timer
+expired.</p>
+<p>A software timeout protects the reference application from waiting
+indefinitely if the expected callback is not received.</p>
+<h2 id="hardware-requirements">Hardware requirements</h2>
+<ul>
+<li>1 x FPB-RA2E3, FPB-RA4E2, FPB-RA6E2, or FPB-RA8E1</li>
+<li>1 x USB cable for programming and debugging</li>
+</ul>
+<p>The supplied README does not specify an additional jumper wire for
+these four boards for GPT Periodic/PWM/One-Shot operation.</p>
+<h3 id="fpb-ra2e3">FPB-RA2E3</h3>
+<p>To use J-Link On-Board VCOM for the serial terminal, close:</p>
+<ul>
+<li><strong>E25</strong></li>
+<li><strong>E28</strong></li>
+<li><strong>E46</strong></li>
+<li><strong>E47</strong></li>
+</ul>
+<h3 id="fpb-ra4e2">FPB-RA4E2</h3>
+<p>No additional board-specific hardware connection is identified for
+this board in the supplied README.</p>
+<h3 id="fpb-ra6e2">FPB-RA6E2</h3>
+<p>No additional board-specific hardware connection is identified for
+this board in the supplied README.</p>
+<h3 id="fpb-ra8e1">FPB-RA8E1</h3>
+<p>No additional board-specific hardware connection is identified for
+this board in the supplied README.</p>
+<h2 id="what-does-the-sbb-core-code-do">What does the SBB core code
+do?</h2>
+<p>The reusable SBB core is implemented in:</p>
+<ul>
+<li><code>gpt_timer.c</code></li>
+<li><code>gpt_timer.h</code></li>
+</ul>
+<p>It wraps the GPT operations needed by the demonstration and provides
+board-dependent constants used by the application.</p>
+<p>The SBB core:</p>
+<ul>
+<li>Opens a supplied GPT timer instance.</li>
+<li>Tracks the currently active GPT control instance.</li>
+<li>Starts a supplied GPT timer.</li>
+<li>Sets the Periodic timer period.</li>
+<li>Calculates and sets PWM duty-cycle counts.</li>
+<li>Selects the applicable GPT output pin for the supported board
+configuration.</li>
+<li>Defines board-specific maximum timer counts and displayed period
+ranges.</li>
+<li>Closes a GPT timer instance when it is open.</li>
+<li>Handles the One-Shot cycle-end callback.</li>
+<li>Exposes a flag indicating that the One-Shot timer has expired.</li>
+</ul>
+<h2 id="demoreference-application-versus-reusable-sbb-code">Demo/reference
+application versus reusable SBB code</h2>
+<h3 id="reusable-sbb-code">Reusable SBB code</h3>
+<p><code>gpt_timer.c</code> and <code>gpt_timer.h</code> are the
+reusable GPT-facing layer.</p>
+<p>They contain the wrappers around <code>R_GPT_Open()</code>,
+<code>R_GPT_Start()</code>, <code>R_GPT_PeriodSet()</code>,
+<code>R_GPT_InfoGet()</code>, <code>R_GPT_DutyCycleSet()</code>, and
+<code>R_GPT_Close()</code>, as well as the One-Shot callback and
+board/configuration constants used by the demonstration.</p>
+<h3 id="demoreference-application-code">Demo/reference application
+code</h3>
+<p><code>gpt_example_app.c</code> and <code>gpt_example_app.h</code>
+implement the interactive demonstration. This layer is responsible
+for:</p>
+<ul>
+<li>Initializing the UART console.</li>
+<li>Reading and displaying the FSP version.</li>
+<li>Displaying the three-mode menu.</li>
+<li>Reading and converting terminal input.</li>
+<li>Calculating Periodic-mode timer counts from milliseconds.</li>
+<li>Validating the requested period against the configured maximum
+counter value.</li>
+<li>Validating PWM duty cycle input.</li>
+<li>Selecting and sequencing the Periodic, PWM, and One-Shot
+demonstrations.</li>
+<li>Waiting for the One-Shot callback.</li>
+<li>Displaying operation and error information.</li>
+</ul>
+<p>Its single application entry point is:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> gpt_example_app_run<span class="op">(</span><span class="dt">void</span><span class="op">);</span></span></code></pre></div>
+<p>The source states that this function is called from
+<code>hal_entry.c</code>.</p>
+<h2 id="which-public-functions-should-i-look-at-first">Which public
+functions should I look at first?</h2>
+<h3 id="init_gpt_timer"><code>init_gpt_timer()</code></h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fsp_err_t init_gpt_timer<span class="op">(</span>timer_ctrl_t <span class="op">*</span> <span class="dt">const</span> p_timer_ctl<span class="op">,</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                         timer_cfg_t <span class="dt">const</span> <span class="op">*</span> <span class="dt">const</span> p_timer_cfg<span class="op">);</span></span></code></pre></div>
+<p>Stores the supplied control instance as the active GPT and calls
+<code>R_GPT_Open()</code> when the timer is not already open.</p>
+<h3 id="start_gpt_timer"><code>start_gpt_timer()</code></h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fsp_err_t start_gpt_timer<span class="op">(</span>timer_ctrl_t <span class="op">*</span> <span class="dt">const</span> p_timer_ctl<span class="op">);</span></span></code></pre></div>
+<p>Starts the selected GPT instance with <code>R_GPT_Start()</code>.</p>
+<h3 id="set_period_gpt_timer"><code>set_period_gpt_timer()</code></h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fsp_err_t set_period_gpt_timer<span class="op">(</span>timer_ctrl_t <span class="op">*</span> <span class="dt">const</span> p_ctrl<span class="op">,</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                               <span class="dt">uint32_t</span> <span class="dt">const</span> period_counts<span class="op">);</span></span></code></pre></div>
+<p>Updates a timer period using <code>R_GPT_PeriodSet()</code>. The
+reference application uses this function in Periodic mode after
+converting the requested millisecond period to timer counts.</p>
+<h3 id="set_timer_duty_cycle"><code>set_timer_duty_cycle()</code></h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fsp_err_t set_timer_duty_cycle<span class="op">(</span><span class="dt">uint8_t</span> duty_cycle_percent<span class="op">);</span></span></code></pre></div>
+<p>Gets the PWM GPT’s current <code>period_counts</code>, calculates the
+requested percentage as timer counts, and applies it with
+<code>R_GPT_DutyCycleSet()</code> to <code>TIMER_PIN</code>.</p>
+<h3 id="deinit_gpt_timer"><code>deinit_gpt_timer()</code></h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> deinit_gpt_timer<span class="op">(</span>timer_ctrl_t <span class="op">*</span> <span class="dt">const</span> p_timer_ctl<span class="op">);</span></span></code></pre></div>
+<p>Closes the selected GPT instance if it is open.</p>
+<h3 id="user_gpt_one_shot_callback"><code>user_gpt_one_shot_callback()</code></h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> user_gpt_one_shot_callback<span class="op">(</span>timer_callback_args_t <span class="op">*</span> p_args<span class="op">);</span></span></code></pre></div>
+<p>Sets <code>g_one_shot_expired</code> when the callback receives
+<code>TIMER_EVENT_CYCLE_END</code>.</p>
+<h2 id="what-configuration-assumptions-were-made-for-the-reference-boards">What
+configuration assumptions were made for the reference boards?</h2>
+<h3 id="generated-gpt-instances">Generated GPT instances</h3>
+<p>The reference application uses generated configurations for three GPT
+uses:</p>
+<ul>
+<li><code>g_timer_periodic_ctrl</code> /
+<code>g_timer_periodic_cfg</code></li>
+<li><code>g_timer_pwm_ctrl</code> / <code>g_timer_pwm_cfg</code></li>
+<li><code>g_timer_one_shot_mode_ctrl</code> /
+<code>g_timer_one_shot_mode_cfg</code></li>
+</ul>
+<p>These configurations provide the timer modes, source divider, output
+configuration, callbacks, and other GPT settings consumed by the
+hand-written source.</p>
+<h3 id="gpt-output-pin">GPT output pin</h3>
+<p>For FPB-RA2E3, FPB-RA4E2, and FPB-RA6E2, <code>gpt_timer.h</code>
+selects:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>GPT_IO_PIN_GTIOCA</span></code></pre></div>
+<p>The FPB-RA8E1 is not included in that <code>TIMER_PIN</code>
+conditional and therefore uses:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>GPT_IO_PIN_GTIOCB</span></code></pre></div>
+<h3 id="timer-width-used-by-the-reference-application">Timer width used
+by the reference application</h3>
+<p>For FPB-RA4E2 and FPB-RA6E2, the header defines the maximum period
+count as:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bn">0xFFFF</span></span></code></pre></div>
+<p>For FPB-RA2E3 and FPB-RA8E1, it defines:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bn">0xFFFFFFFF</span></span></code></pre></div>
+<p>The reference application compares its calculated Periodic-mode count
+against this value before programming the timer.</p>
+<h3 id="period-ranges-from-the-supplied-configuration">Period ranges
+from the supplied configuration</h3>
+<p>The supplied README and header define these Periodic-mode ranges:</p>
+<table>
+<thead>
+<tr>
+<th>Board</th>
+<th style="text-align: right;">Configured period range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FPB-RA2E3</td>
+<td style="text-align: right;">0 to 89478 ms</td>
+</tr>
+<tr>
+<td>FPB-RA4E2</td>
+<td style="text-align: right;">0 to 671 ms</td>
+</tr>
+<tr>
+<td>FPB-RA6E2</td>
+<td style="text-align: right;">0 to 671 ms</td>
+</tr>
+<tr>
+<td>FPB-RA8E1</td>
+<td style="text-align: right;">0 to 35791 ms</td>
+</tr>
+</tbody>
+</table>
+<p>These are documented as ranges for the supplied example configuration
+rather than universal GPT hardware limits.</p>
+<h3 id="pwm-range">PWM range</h3>
+<p>The SBB defines:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define GPT_MAX_PERCENT </span><span class="op">(</span><span class="dv">100</span><span class="bu">U</span><span class="op">)</span></span></code></pre></div>
+<p>The reference application therefore accepts PWM duty-cycle input from
+<strong>0 through 100 percent</strong>.</p>
+<h3 id="console-input">Console input</h3>
+<p>The input buffer size is 16 bytes. The supplied README states that
+user-entered data should not exceed <strong>15 bytes</strong> and that
+operation is not guaranteed for non-integer inputs such as
+floating-point values, characters, or special characters.</p>
+<h2 id="what-must-i-change-for-my-board-or-application">What must I
+change for my board or application?</h2>
+<h3 id="gpt-instances-and-modes">GPT instances and modes</h3>
+<p>The three generated GPT configurations must match the intended
+Periodic, PWM, and One-Shot uses. If a different GPT channel or mode
+configuration is selected, update the generated FSP project
+configuration and ensure the hand-written code refers to the appropriate
+generated objects.</p>
+<h3 id="pwm-output-pin">PWM output pin</h3>
+<p><code>TIMER_PIN</code> is board-dependent. If the PWM output moves to
+a different GPT output, validate the generated pin configuration and the
+<code>TIMER_PIN</code> selection used by
+<code>R_GPT_DutyCycleSet()</code>.</p>
+<h3 id="clock-source-and-divider">Clock source and divider</h3>
+<p>Periodic-mode timing is calculated from the GPT source frequency and
+<code>g_timer_periodic_cfg.source_div</code>.</p>
+<p>The reference application obtains the source frequency from GPTCLK
+when the BSP indicates GPTCLK is present and not bypassed. Otherwise it
+obtains PCLKD using <code>R_FSP_SystemClockHzGet()</code>. It then
+applies the configured GPT source divider before converting milliseconds
+to counts.</p>
+<p>If system clocks, GPT source clocks, or the GPT source divider
+change, revalidate the resulting period range and count calculation.</p>
+<h3 id="timer-width-and-permitted-range">Timer width and permitted
+range</h3>
+<p>The supplied header applies different maximum counter values for the
+documented boards. If the timer channel/configuration changes, verify
+that the maximum period-count assumption and user-facing period range
+remain valid for the selected configuration.</p>
+<h3 id="pwm-period">PWM period</h3>
+<p><code>set_timer_duty_cycle()</code> derives duty-cycle counts from
+the PWM timer’s current <code>period_counts</code>, obtained through
+<code>R_GPT_InfoGet()</code>. If the underlying PWM period changes, the
+duty count changes accordingly.</p>
+<h3 id="one-shot-timing">One-Shot timing</h3>
+<p>The One-Shot period is provided by
+<code>g_timer_one_shot_mode_cfg</code>; the supplied hand-written source
+does not change that period at runtime. Change the generated One-Shot
+configuration if a different one-shot interval is needed.</p>
+<h3 id="memory">Memory</h3>
+<p>The supplied files do not provide a measured RAM or ROM footprint for
+the SBB.</p>
+<h3 id="task-priorities-and-execution-model">Task priorities and
+execution model</h3>
+<p>The supplied implementation does not define an RTOS or task
+priorities. The application runs a foreground loop and, during One-Shot
+operation, polls <code>g_one_shot_expired</code> until the callback sets
+it or a software timeout expires.</p>
+<p>If integrated into an RTOS-based system, scheduling and
+synchronization behavior must be defined by that application.</p>
+<h3 id="console-middleware">Console middleware</h3>
+<p>The interactive menu and standard I/O are reference-application
+functionality. The underlying GPT wrapper functions do not depend on the
+menu itself. An integrating application can invoke the reusable GPT
+operations through its own control path.</p>
+<h2 id="dependencies">Dependencies</h2>
+<h3 id="renesas-fsp-gpt-hal">Renesas FSP GPT HAL</h3>
+<p>The reusable SBB directly uses:</p>
+<ul>
+<li><code>R_GPT_Open()</code></li>
+<li><code>R_GPT_Start()</code></li>
+<li><code>R_GPT_InfoGet()</code></li>
+<li><code>R_GPT_DutyCycleSet()</code></li>
+<li><code>R_GPT_PeriodSet()</code></li>
+<li><code>R_GPT_Close()</code></li>
+</ul>
+<h3 id="renesas-fspbsp-clock-apis">Renesas FSP/BSP clock APIs</h3>
+<p>Periodic-mode count calculation in the reference application
+uses:</p>
+<ul>
+<li><code>R_FSP_ClockDividerGet()</code> and
+<code>R_BSP_SourceClockHzGet()</code> when the applicable GPTCLK feature
+path is enabled.</li>
+<li><code>R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKD)</code>
+otherwise.</li>
+</ul>
+<h3 id="generated-fsp-configuration">Generated FSP configuration</h3>
+<p>The SBB includes <code>hal_data.h</code> and depends on the generated
+Periodic, PWM, and One-Shot GPT configuration/control objects.</p>
+<h3 id="consolereference-application">Console/reference application</h3>
+<p>The demo layer uses:</p>
+<ul>
+<li><code>console/uart_console.h</code></li>
+<li><code>uart_console_init()</code></li>
+<li><code>uart_console_has_char()</code></li>
+<li><code>uart_console_flush()</code></li>
+<li><code>printf()</code></li>
+<li><code>fgets()</code></li>
+<li><code>atoi()</code></li>
+<li><code>strlen()</code></li>
+<li><code>memset()</code></li>
+<li><code>strcspn()</code></li>
+<li><code>R_FSP_VersionGet()</code></li>
+</ul>
+<h3 id="hardware-resources">Hardware resources</h3>
+<p>The reference implementation requires the GPT peripherals and
+configured GPT output used by the supplied board project. The Periodic
+and PWM modes use the user LED according to the supplied example
+description, while One-Shot completion is reported on the terminal.</p>
+<h2 id="serial-terminal-configuration">Serial terminal
+configuration</h2>
+<p>The supplied README specifies:</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Port</td>
+<td>Port provided by J-Link On-Board</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>115200</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>8 bit</td>
+</tr>
+<tr>
+<td>Parity</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Stop bits</td>
+<td>1 bit</td>
+</tr>
+<tr>
+<td>Flow control</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p>For Tera Term:</p>
+<ul>
+<li>Receive newline: <strong>CR</strong></li>
+<li>Transmit newline: <strong>CR</strong></li>
+<li><strong>Local echo</strong> enabled</li>
+</ul>
+<h2 id="what-behavior-and-performance-were-demonstrated-or-measured">What
+behavior and performance were demonstrated or measured?</h2>
+<h3 id="demonstrated-behavior">Demonstrated behavior</h3>
+<p>The supplied application demonstrates:</p>
+<ul>
+<li>Selecting Periodic, PWM, or One-Shot GPT operation from a terminal
+menu.</li>
+<li>Changing the Periodic timer period from terminal input.</li>
+<li>Calculating timer counts from the configured source clock and source
+divider.</li>
+<li>Rejecting a Periodic-mode request when the calculated count exceeds
+<code>GPT_MAX_PERIOD_COUNT</code>.</li>
+<li>Setting PWM duty cycle from 0 through 100 percent.</li>
+<li>Calculating PWM duty-cycle counts from the current configured
+period.</li>
+<li>Starting a One-Shot timer and detecting its cycle-end callback.</li>
+<li>Detecting the absence of the expected One-Shot callback through a
+software timeout.</li>
+<li>Closing the currently active GPT before switching to another
+demonstration mode.</li>
+</ul>
+<h3 id="reference-application-ranges">Reference application ranges</h3>
+<p>The supplied configurations expose different period ranges on the
+four requested boards:</p>
+<ul>
+<li>FPB-RA2E3: <strong>0 to 89478 ms</strong></li>
+<li>FPB-RA4E2: <strong>0 to 671 ms</strong></li>
+<li>FPB-RA6E2: <strong>0 to 671 ms</strong></li>
+<li>FPB-RA8E1: <strong>0 to 35791 ms</strong></li>
+</ul>
+<p>The PWM demonstration accepts <strong>0 to 100 percent</strong> duty
+cycle.</p>
+<h3 id="performance-measurements">Performance measurements</h3>
+<p>The supplied files do not report measured timer accuracy, PWM
+frequency accuracy, jitter, interrupt latency, CPU utilization, memory
+footprint, or One-Shot latency.</p>
+<p>The documented millisecond ranges are properties of the supplied
+configuration, not measured GPT performance limits. This SBB should
+therefore be treated as a functional GPT reference rather than a
+performance benchmark.</p>
+<h2 id="what-files-are-safe-to-modify-and-what-is-generated-preset-or-demo-only">What
+files are safe to modify and what is generated, preset, or
+demo-only?</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>File</th>
+<th>Classification</th>
+<th>Guidance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gpt_timer.c</code></td>
+<td>Reusable SBB implementation</td>
+<td>Modify when intentionally changing GPT wrappers, PWM calculation,
+active-timer handling, or One-Shot callback behavior.</td>
+</tr>
+<tr>
+<td><code>gpt_timer.h</code></td>
+<td>Reusable SBB interface and board/configuration presets</td>
+<td>Modify carefully when changing public APIs, timer limits, output-pin
+selection, or displayed period ranges.</td>
+</tr>
+<tr>
+<td><code>gpt_example_app.c</code></td>
+<td>Demo/reference application</td>
+<td>Appropriate place for changing menu behavior, input handling,
+demonstration sequencing, period-count calculation policy, or
+presentation.</td>
+</tr>
+<tr>
+<td><code>gpt_example_app.h</code></td>
+<td>Demo/reference application interface</td>
+<td>Contains the demonstration entry point, menu, banner, and
+informational strings.</td>
+</tr>
+<tr>
+<td><code>readme.txt</code></td>
+<td>Existing example documentation</td>
+<td>Source for supported-board configuration ranges, hardware notes,
+input restrictions, and terminal settings.</td>
+</tr>
+</tbody>
+</table>
+<p>The source also depends on generated FSP configuration through
+<code>hal_data.h</code>. The supplied file set does not enumerate those
+generated files individually, so this document does not classify
+unprovided generated files by name.</p>
+<h2 id="what-happens-if-i-modify-the-source-and-later-adopt-a-newer-sbb-release">What
+happens if I modify the source and later adopt a newer SBB release?</h2>
+<p>Changes to <code>gpt_timer.c</code> or <code>gpt_timer.h</code>
+become local modifications to the reusable SBB layer. A newer SBB
+release can modify the same interfaces, board conditionals,
+calculations, or callback logic, requiring those changes to be
+reconciled.</p>
+<p>To reduce upgrade conflicts:</p>
+<ul>
+<li>Keep menu behavior, terminal parsing, and demonstration messages in
+<code>gpt_example_app.*</code>.</li>
+<li>Prefer using generated FSP configuration for timer channels,
+operating modes, periods, dividers, callbacks, and pin configuration
+when those settings belong to the generated project.</li>
+<li>Keep necessary SBB-core modifications focused and document why they
+are required.</li>
+<li>Keep generated FSP configuration separate from hand-maintained SBB
+source.</li>
+<li>When adopting a newer SBB release, compare the new
+<code>gpt_timer.c</code> and <code>gpt_timer.h</code> against the
+locally modified versions before carrying changes forward.</li>
+<li>Revalidate the board’s timer width assumption,
+<code>TIMER_PIN</code>, supported period range, clock calculation, PWM
+behavior, One-Shot callback, and generated GPT configurations after an
+update.</li>
+</ul>
+<p>The supplied files do not define an automated source-migration or
+compatibility mechanism for later SBB releases. Compatibility after an
+update must therefore be validated by the integrating project.</p>
+<h2 id="recommended-reading-order">Recommended reading order</h2>
+<ol type="1">
+<li><strong><code>gpt_timer.h</code></strong> to understand the reusable
+API, board-specific output selection, maximum timer count, and
+configured period ranges.</li>
+<li><strong><code>gpt_timer.c</code></strong> to understand GPT
+initialization, start, Periodic/PWM updates, cleanup, and One-Shot
+callback behavior.</li>
+<li><strong><code>gpt_example_app.c</code></strong> to see how Periodic,
+PWM, and One-Shot operations are selected and exercised.</li>
+<li><strong><code>gpt_example_app.h</code></strong> to see the demo
+entry point and terminal menu/information strings.</li>
+<li><strong><code>readme.txt</code></strong> for the original hardware,
+period-range, input, and serial-terminal information.</li>
+</ol>
+</body>
+</html>
